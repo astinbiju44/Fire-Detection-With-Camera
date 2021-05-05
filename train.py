@@ -6,7 +6,12 @@ from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
 from keras.preprocessing.image import ImageDataGenerator
 from keras.utils.np_utils import to_categorical
+from tensorflow.keras.layers import Conv2D,MaxPooling2D,Flatten,Dropout,Dense
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.optimizers import Adam
 
+
+imagedimensions=(32,32,3)
 
 
 #importing images
@@ -22,7 +27,7 @@ for x in range(0,noofclasses):
     mypiclist=os.listdir(path+"/"+str(x))
     for y in mypiclist:
         curimg=cv2.imread(path+"/"+str(x)+"/"+y)
-        curimg=cv2.resize(curimg,(32,32))
+        curimg=cv2.resize(curimg,(imagedimensions[0],imagedimensions[1]))
         images.append(curimg)
         classno.append(x)
     print(x,end=",")
@@ -94,6 +99,7 @@ x_validation=x_validation.reshape(x_validation.shape[0],x_validation.shape[1],x_
 
 
 
+
 #image augmenting
 datagen=ImageDataGenerator(width_shift_range=0.1,
                            height_shift_range=0.1,
@@ -101,3 +107,46 @@ datagen=ImageDataGenerator(width_shift_range=0.1,
                            shear_range=0.1,
                            rotation_range=10)
 datagen.fit(x_train)
+
+
+
+
+#label encoding
+y_train=to_categorical(y_train,noofclasses)
+y_test=to_categorical(y_train,noofclasses)
+y_validation=to_categorical(y_train,noofclasses)
+
+
+
+
+
+#model defining
+def mymodel():
+
+    nooffilters=60
+    sizeoffilter1=(5,5)
+    sizeoffilter2 = (3,3)
+    sizeofpool=(2,2)
+    noofnode=500
+
+
+    model=Sequential()
+    model.add(Conv2D(nooffilters,sizeoffilter1,input_shape=(imagedimensions[0],
+                                                             imagedimensions[1],
+                                                             1),activation='relu'))
+    model.add(Conv2D(nooffilters, sizeoffilter1,activation='relu'))
+    model.add(MaxPooling2D(pool_size=sizeofpool))
+    model.add(Conv2D(nooffilters//2, sizeoffilter2, activation='relu'))
+    model.add(Conv2D(nooffilters//2, sizeoffilter2, activation='relu'))
+    model.add(MaxPooling2D(pool_size=sizeofpool))
+    model.add(Dropout(0.5))
+
+    model.add(Flatten())
+    model.add(Dense(noofnode,activation='relu'))
+    model.add(Dropout(0.5))
+    model.add(Dense(noofclasses, activation='softmax'))
+    model.compile(Adam(lr=0.001),loss='binary_crossentropy', metrics=['accuracy']) #lr means learning rate
+    return model
+
+model=mymodel()
+print(model.summary())
