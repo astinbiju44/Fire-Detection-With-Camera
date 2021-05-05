@@ -1,6 +1,5 @@
 import numpy as np
 import cv2
-import pickle
 from keras.models import load_model
 
 
@@ -14,7 +13,7 @@ cap.set(3, width)
 cap.set(4, height)
 
 #model file loaded
-model = load_model('detection.h5')
+model = load_model('fire_detection_model.h5')
 print("Model Loaded Successfully")
 
 

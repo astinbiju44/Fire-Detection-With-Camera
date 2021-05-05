@@ -9,7 +9,6 @@ from keras.utils.np_utils import to_categorical
 from tensorflow.keras.layers import Conv2D,MaxPooling2D,Flatten,Dropout,Dense
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.optimizers import Adam
-import pickle
 
 
 imagedimensions=(32,32,3)
@@ -157,7 +156,7 @@ print(model.summary())
 
 #compiling the model
 batchsize=32
-epochs=5
+epochs=100
 stepsperepoch=len(x_train)//batchsize
 
 history=model.fit_generator(datagen.flow(x_train,y_train,batch_size=batchsize), #batchsize means how many images at a time is taken to datagen for image augmenting
