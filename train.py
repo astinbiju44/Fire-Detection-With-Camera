@@ -4,6 +4,8 @@ import os
 import time
 from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
+from keras.preprocessing.image import ImageDataGenerator
+from keras.utils.np_utils import to_categorical
 
 
 
@@ -91,3 +93,11 @@ x_validation=x_validation.reshape(x_validation.shape[0],x_validation.shape[1],x_
 
 
 
+
+#image augmenting
+datagen=ImageDataGenerator(width_shift_range=0.1,
+                           height_shift_range=0.1,
+                           zoom_range=0.2,
+                           shear_range=0.1,
+                           rotation_range=10)
+datagen.fit(x_train)
