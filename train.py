@@ -150,3 +150,17 @@ def mymodel():
 
 model=mymodel()
 print(model.summary())
+
+
+
+
+#compiling the model
+batchsize=50
+epochs=10
+stepsperepoch=2000
+
+history=model.fit_generator(datagen.flow(x_train,y_train,batch_size=batchsize), #batchsize means how many images at a time is taken to datagen for image augmenting
+                    steps_per_epoch=stepsperepoch,
+                    epochs=epochs,
+                    validation_data=(x_validation,y_validation),
+                    shuffle=1)
