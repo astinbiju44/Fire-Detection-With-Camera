@@ -48,7 +48,7 @@ x_train,x_validation,y_train,y_validation=train_test_split(x_train,y_train,test_
 
 
 
-#ploting grapgh to know how many images are in each class
+#plotting graph to know how many images are in each class
 numofsamples=[]
 for x in range(0,noofclasses):
     print(len(np.where(y_train==x)[0]))  #y contains the class ids so it will give the number of images
@@ -62,6 +62,22 @@ plt.ylabel("number of Images")
 plt.show()
 
 
+
+
+
+
+#data preprocessing
+def preprocessing(img):
+    img=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+    img=cv2.equalizeHist(img) #this will help to equalize the distribution of lighting in each images
+    img=img/255  #changing 0 to 255 into 0 to 1
+    return img
+x_train=np.array(list(map(preprocessing,x_train)))#map will take each image from input and send it to preprocessing function
+                                                 #The result from funtion is stored in list using list.
+                                                 #that list is converted to array
+                                                 #this same as done in line 31
+x_test=np.array(list(map(preprocessing,x_test)))
+x_validation=np.array(list(map(preprocessing,x_validation)))
 
 
 
