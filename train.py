@@ -157,7 +157,7 @@ print(model.summary())
 
 #compiling the model
 batchsize=32
-epochs=100
+epochs=5
 stepsperepoch=len(x_train)//batchsize
 
 history=model.fit_generator(datagen.flow(x_train,y_train,batch_size=batchsize), #batchsize means how many images at a time is taken to datagen for image augmenting
@@ -194,8 +194,6 @@ print("Test Accurancy = ",score[1])
 
 
 
-
 #saving the model
-pickle_out=open("model_trained.p","wb")
-pickle.dump(model,pickle_out)
-pickle_out.close()
+model.save('fire_detection_model.h5')
+print("Model Saved")
