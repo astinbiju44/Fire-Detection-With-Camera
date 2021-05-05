@@ -9,6 +9,7 @@ from keras.utils.np_utils import to_categorical
 from tensorflow.keras.layers import Conv2D,MaxPooling2D,Flatten,Dropout,Dense
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.optimizers import Adam
+import pickle
 
 
 imagedimensions=(32,32,3)
@@ -155,9 +156,9 @@ print(model.summary())
 
 
 #compiling the model
-batchsize=50
-epochs=10
-stepsperepoch=2000
+batchsize=32
+epochs=100
+stepsperepoch=len(x_train)//batchsize
 
 history=model.fit_generator(datagen.flow(x_train,y_train,batch_size=batchsize), #batchsize means how many images at a time is taken to datagen for image augmenting
                     steps_per_epoch=stepsperepoch,
@@ -189,3 +190,12 @@ plt.show()
 score=model.evaluate(x_test,y_test,verbose=0)
 print("Test Score = ",score[0])
 print("Test Accurancy = ",score[1])
+
+
+
+
+
+#saving the model
+pickle_out=open("model_trained.p","wb")
+pickle.dump(model,pickle_out)
+pickle_out.close()
