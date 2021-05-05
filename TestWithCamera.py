@@ -17,3 +17,11 @@ pickle_in = open("model_trained.p", "rb")
 model = pickle.load(pickle_in)
 
 
+#preprocess the camera image
+def preProcessing(img):
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    img = cv2.equalizeHist(img)
+    img = img / 255
+    return img
+
+
