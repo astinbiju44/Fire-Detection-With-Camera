@@ -81,6 +81,13 @@ x_validation=np.array(list(map(preprocessing,x_validation)))
 
 
 
+#adding depth of 1...this will help the cnn to work proper
+print(x_train.shape)
+x_train=x_train.reshape(x_train.shape[0],x_train.shape[1],x_train.shape[2],1)
+#print(x_train.shape)
+x_test=x_test.reshape(x_test.shape[0],x_test.shape[1],x_test.shape[2],1)
+x_validation=x_validation.reshape(x_validation.shape[0],x_validation.shape[1],x_validation.shape[2],1)
+
 
 
 
