@@ -2,6 +2,7 @@ import numpy as np
 import cv2
 import os
 import time
+from sklearn.model_selection import train_test_split
 
 
 
@@ -35,6 +36,11 @@ print(classno.shape)
 
 
 
+#spliting the data
+testratio=0.2
+validationratio=0.2
+x_train,x_test,y_train,y_test=train_test_split(images,classno,test_size=testratio)
+x_train,x_validation,y_train,y_validation=train_test_split(x_train,y_train,test_size=validationratio)
 
 
 
