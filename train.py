@@ -114,8 +114,8 @@ datagen.fit(x_train)
 
 #label encoding
 y_train=to_categorical(y_train,noofclasses)
-y_test=to_categorical(y_train,noofclasses)
-y_validation=to_categorical(y_train,noofclasses)
+y_test=to_categorical(y_test,noofclasses)
+y_validation=to_categorical(y_validation,noofclasses)
 
 
 
