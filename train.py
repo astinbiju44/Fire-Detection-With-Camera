@@ -164,3 +164,28 @@ history=model.fit_generator(datagen.flow(x_train,y_train,batch_size=batchsize), 
                     epochs=epochs,
                     validation_data=(x_validation,y_validation),
                     shuffle=1)
+
+
+#plotting graphs
+plt.figure(1)
+plt.plot(history.history['accuracy'])
+plt.plot(history.history['val_accuracy'])
+plt.legend(['training','validation'])
+plt.title('Accuracy Graph')
+plt.xlabel('epochs')
+plt.ylabel('accuracy')
+plt.savefig('Accuracy.png')
+
+plt.figure(2)
+plt.plot(history.history['loss'])
+plt.plot(history.history['val_loss'])
+plt.legend(['training','validation'])
+plt.title('Loss Graph')
+plt.xlabel('epochs')
+plt.ylabel('loss')
+plt.legend()
+plt.savefig('Loss.png')
+plt.show()
+score=model.evaluate(x_test,y_test,verbose=0)
+print("Test Score = ",score[0])
+print("Test Accurancy = ",score[1])
