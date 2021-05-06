@@ -1,4 +1,3 @@
-from keras.preprocessing import image
 from keras.models import load_model
 import numpy as np
 import cv2
@@ -22,6 +21,7 @@ def preProcessing(img):
 
 
 def classify(img_file):
+    print(img_file)
     img_name = img_file
     test_image=cv2.imread(img_name)
     img = np.asarray(test_image)
@@ -37,7 +37,6 @@ def classify(img_file):
         print("Fire + Probability : "+str(probVal))
     else:
         print("No Fire + Probability : "+str(probVal))
-
 
 path = 'Testing'
 files = []
