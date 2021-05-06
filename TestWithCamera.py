@@ -1,7 +1,7 @@
 import numpy as np
 import cv2
 from keras.models import load_model
-
+from BeepSound import beepsound
 
 width = 640
 height = 480
@@ -25,6 +25,8 @@ def preProcessing(img):
     return img
 
 
+count=0
+
 while True:
     _,imgOriginal = cap.read()
     img = np.asarray(imgOriginal)
@@ -38,12 +40,19 @@ while True:
     predictions = model.predict(img)
     # print(predictions)
     probVal = np.amax(predictions)
-    print(classIndex, probVal)
+    #print(classIndex, probVal)
     if probVal > threshold:
         cv2.putText(imgOriginal, str(classIndex) + "   " + str(probVal),
                     (50, 50), cv2.FONT_HERSHEY_COMPLEX,
                     1, (0, 0, 255), 1)
+        if classIndex==0:
+            count+=1
+        else:
+            count=0
+        if count==50:
+            beepsound()
 
+    print(count)
     cv2.imshow("Original Image", imgOriginal)
     if cv2.waitKey(1) and 0xFF == ord('q'):
         break
