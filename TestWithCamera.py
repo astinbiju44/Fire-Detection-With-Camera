@@ -2,6 +2,7 @@ import numpy as np
 import cv2
 from keras.models import load_model
 from BeepSound import beepsound
+from CAMERA import camera,MobileCamera
 
 width = 640
 height = 480
@@ -28,7 +29,7 @@ def preProcessing(img):
 count=0
 
 while True:
-    _,imgOriginal = cap.read()
+    imgOriginal=MobileCamera()   # or  imgOriginal=MobileCamera()
     img = np.asarray(imgOriginal)
     img = cv2.resize(img, (32, 32))
     img = preProcessing(img)
@@ -49,7 +50,7 @@ while True:
             count+=1
         else:
             count=0
-        if count==50:
+        if count==20:
             beepsound()
 
     print(count)
